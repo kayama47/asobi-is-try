@@ -27,9 +27,10 @@
 /* 明星和楽「ASOBI is TRY.」のスライドにある QR コードの中継ページ。
    開かれた回数だけを記録係（Apps Script）に知らせてから、公式サイトへ移動する。
    個人を特定する情報は送らない（送るのは経路の名前だけ）。 */
-var LOG = '';                       // 記録係（Apps Script ウェブアプリ）の /exec の URL
+var LOG = 'https://script.google.com/macros/s/AKfycbxdYk_wjGMAsHeZJoDOKg7QHyyVfn8Hxqy2Mj1szlZsPKHM43tm1HO8t1KahPypAqmEmQ/exec';  // 記録係（Apps Script「ASOBI QR 記録係」）
 var GO  = 'https://qmax.co.jp/';
-var SRC = 'meisei_waraku_2026';     // スプレッドシートの「経路」列に入る名前
+// スプレッドシートの「経路」列に入る名前。動作確認は末尾に ?test を付けて開くと「test」で記録される
+var SRC = /[?&]test\b/.test(location.search) ? 'test' : 'meisei_waraku_2026';
 
 function go(){ location.replace(GO); }
 
