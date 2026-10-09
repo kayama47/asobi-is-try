@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="robots" content="noindex,nofollow" />
+<title>QMAX 公式サイトへ</title>
+<!-- JavaScript が動かない環境でも、3秒後には公式サイトへ移動する -->
+<meta http-equiv="refresh" content="3;url=https://qmax.co.jp/" />
+<style>
+  :root{--ink:#171717;--paper:#faf7f2;--mute:#6a6258;--red:#ff5748}
+  @media (prefers-color-scheme:dark){:root{--ink:#f2efe9;--paper:#17161a;--mute:#9c948a}}
+  body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+    background:var(--paper);color:var(--ink);
+    font-family:system-ui,'Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;text-align:center;padding:0 16px}
+  p{margin:.4em 0;line-height:1.7}
+  a{color:var(--red);font-weight:800}
+  .mute{color:var(--mute);font-size:14px}
+</style>
+</head>
+<body>
+<div>
+  <p>QMAX 公式サイトへ移動しています…</p>
+  <p class="mute"><a href="https://qmax.co.jp/">移動しない場合はこちら</a></p>
+</div>
+<script>
+/* 明星和楽「ASOBI is TRY.」のスライドにある QR コードの中継ページ。
+   開かれた回数だけを記録係（Apps Script）に知らせてから、公式サイトへ移動する。
+   個人を特定する情報は送らない（送るのは経路の名前だけ）。 */
+var LOG = '';                       // 記録係（Apps Script ウェブアプリ）の /exec の URL
+var GO  = 'https://qmax.co.jp/';
+var SRC = 'meisei_waraku_2026';     // スプレッドシートの「経路」列に入る名前
+
+function go(){ location.replace(GO); }
+
+if (LOG) {
+  var sent = fetch(LOG + '?src=' + encodeURIComponent(SRC), { mode: 'no-cors', keepalive: true })
+    .catch(function(){});
+  // 記録が遅くても、1.5秒で必ず移動する
+  Promise.race([sent, new Promise(function(r){ setTimeout(r, 1500); })]).then(go);
+} else {
+  go();
+}
+</script>
+</body>
+</html>
